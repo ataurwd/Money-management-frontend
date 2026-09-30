@@ -51,6 +51,7 @@ export default function HomePage() {
   // Modals state
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
   const [isTxModalOpen, setIsTxModalOpen] = useState<boolean>(false);
+  const [isQuickAddOpen, setIsQuickAddOpen] = useState<boolean>(false);
   const [txModalType, setTxModalType] = useState<'LENT' | 'BORROWED'>('LENT');
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
@@ -586,6 +587,95 @@ export default function HomePage() {
         onDeletePayment={handleDeletePayment}
         onSettleInFull={handleSettleInFull}
       />
+
+      {/* Mobile Quick Add Chooser Sheet */}
+      {isQuickAddOpen && (
+        <div className="modal-overlay" onClick={() => setIsQuickAddOpen(false)}>
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{ padding: '1.5rem', textAlign: 'center' }}
+          >
+            <h3 style={{ fontSize: '1.15rem', fontWeight: 800, marginBottom: '0.4rem' }}>
+              Record Transaction
+            </h3>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
+              Choose whether you gave or received money
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <button
+                onClick={() => {
+                  setIsQuickAddOpen(false);
+                  openNewLentModal();
+                }}
+                className="btn btn-get"
+                style={{ padding: '0.9rem', fontSize: '0.95rem' }}
+              >
+                <ArrowDownLeft size={20} />
+                + I Lent Money (You'll Get)
+              </button>
+
+              <button
+                onClick={() => {
+                  setIsQuickAddOpen(false);
+                  openNewBorrowedModal();
+                }}
+                className="btn btn-give"
+                style={{ padding: '0.9rem', fontSize: '0.95rem' }}
+              >
+                <ArrowUpRight size={20} />
+                - I Borrowed Money (You'll Give)
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setIsQuickAddOpen(false)}
+                className="btn btn-secondary"
+                style={{ padding: '0.75rem', marginTop: '0.5rem' }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Bottom Navigation Bar */}
+      <nav className="mobile-bottom-nav">
+        <button
+          onClick={() => setCurrentView('LEDGER')}
+          className={`mobile-nav-item ${currentView === 'LEDGER' ? 'active' : ''}`}
+        >
+          <ListFilter size={20} />
+          <span>Ledger</span>
+        </button>
+
+        <button
+          onClick={() => setIsQuickAddOpen(true)}
+          className="mobile-nav-add-btn"
+          title="Quick Record Transaction"
+        >
+          <Plus size={24} />
+        </button>
+
+        <button
+          onClick={() => setCurrentView('CONTACTS')}
+          className={`mobile-nav-item ${currentView === 'CONTACTS' ? 'active' : ''}`}
+        >
+          <Users size={20} />
+          <span>People</span>
+        </button>
+
+        <button
+          onClick={() => exportTransactionsToCsv(transactions, currency)}
+          className="mobile-nav-item"
+        >
+          <Download size={20} />
+          <span>Export</span>
+        </button>
+      </nav>
     </div>
   );
 }
+

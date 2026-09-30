@@ -154,7 +154,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
       </div>
 
       {/* Middle Column: Progress and Balance */}
-      <div style={{ minWidth: '180px', textAlign: 'right' }}>
+      <div className="tx-middle-column" style={{ minWidth: '180px', textAlign: 'right' }}>
         <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
           {isSettled ? 'Settled Total' : 'Remaining Due'}
         </div>
@@ -205,7 +205,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
       </div>
 
       {/* Right Column: Actions */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+      <div className="tx-actions-row" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
         <button
           onClick={() => onOpenPaymentModal(transaction)}
           className={`btn ${isSettled ? 'btn-secondary' : isLent ? 'btn-get' : 'btn-give'}`}

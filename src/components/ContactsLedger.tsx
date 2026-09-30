@@ -56,7 +56,7 @@ export const ContactsLedger: React.FC<ContactsLedgerProps> = ({
           marginBottom: '1.25rem',
         }}
       >
-        <div style={{ position: 'relative', flex: 1, minWidth: '240px' }}>
+        <div style={{ position: 'relative', flex: 1, minWidth: '180px' }}>
           <Search
             size={16}
             style={{
@@ -82,7 +82,7 @@ export const ContactsLedger: React.FC<ContactsLedgerProps> = ({
             onClick={() => setFilterType('ALL')}
             className={`tab-btn ${filterType === 'ALL' ? 'active' : ''}`}
           >
-            All People ({contacts.length})
+            All ({contacts.length})
           </button>
           <button
             onClick={() => setFilterType('OWES_YOU')}
@@ -110,7 +110,7 @@ export const ContactsLedger: React.FC<ContactsLedgerProps> = ({
         <div
           className="glass-card"
           style={{
-            padding: '3rem',
+            padding: '3rem 1rem',
             textAlign: 'center',
             color: 'var(--text-muted)',
           }}
@@ -125,8 +125,8 @@ export const ContactsLedger: React.FC<ContactsLedgerProps> = ({
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-            gap: '1.25rem',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))',
+            gap: '1rem',
           }}
         >
           {filteredContacts.map((contact, idx) => {

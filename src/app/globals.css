@@ -455,30 +455,38 @@ button, input, select, textarea {
   box-shadow: var(--shadow-glow-give);
 }
 
-/* Filter Bar */
+/* Filter Bar & Horizontal Swipeable Tabs */
 .filter-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1.5rem;
+  padding: 0.85rem 1.15rem;
+  margin-bottom: 1.25rem;
   border-radius: var(--radius-md);
 }
 
-/* Tabs */
+/* Tabs with smooth horizontal swipe on mobile */
 .tabs {
   display: flex;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 4px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 3px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-subtle);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  flex-wrap: nowrap;
+  max-width: 100%;
+}
+.tabs::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
 }
 
 .tab-btn {
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
   border: none;
   background: transparent;
@@ -486,6 +494,8 @@ button, input, select, textarea {
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .tab-btn.active {
@@ -498,34 +508,35 @@ button, input, select, textarea {
 .transaction-list {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 0.75rem;
 }
 
 .transaction-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem 1.5rem;
+  padding: 1.15rem 1.35rem;
   border-radius: var(--radius-md);
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   transition: all var(--transition-fast);
+  gap: 1rem;
 }
 
 .transaction-card:hover {
   border-color: var(--border-hover);
   background: var(--bg-card-hover);
-  transform: translateX(3px);
+  transform: translateY(-1px);
 }
 
-/* Modal Overlay & Container */
+/* Modal Overlay & Bottom Sheet for Mobile */
 .modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  z-index: 50;
+  z-index: 60;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -556,18 +567,201 @@ button, input, select, textarea {
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* Responsive tweaks */
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* Responsive Media Queries */
 @media (max-width: 768px) {
+  .container {
+    padding: 0 0.85rem;
+  }
+
+  .header-content {
+    height: 60px;
+  }
+
+  .logo-subtitle {
+    display: none !important;
+  }
+
+  .user-name-text {
+    display: none !important;
+  }
+
+  .hero-balance-card {
+    padding: 1.25rem !important;
+    border-radius: var(--radius-lg) !important;
+    margin-top: 1rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+
   .net-amount {
-    font-size: 2.2rem;
+    font-size: clamp(2rem, 7vw, 2.5rem) !important;
+    margin: 0.35rem 0 0.75rem !important;
   }
-  .transaction-card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+
+  .hero-actions-container {
+    width: 100% !important;
+    margin-top: 0.5rem;
   }
+
+  .hero-quick-buttons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+  }
+
+  .hero-quick-buttons .btn {
+    padding: 0.65rem 0.5rem !important;
+    font-size: 0.785rem !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .pillars-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .pillar-card {
+    padding: 1.25rem !important;
+  }
+
   .filter-bar {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 0.85rem !important;
+  }
+
+  .filter-bar .tabs {
+    width: 100% !important;
+  }
+
+  .transaction-card {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 1rem !important;
+    gap: 0.85rem !important;
+  }
+
+  .tx-middle-column {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    text-align: left !important;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.5rem 0 !important;
+    margin: 0.25rem 0 !important;
+  }
+
+  .tx-actions-row {
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 0.5rem !important;
+  }
+
+  .tx-actions-row .btn {
+    flex: 1 !important;
+  }
+
+  /* Bottom sheet modal on mobile */
+  .modal-overlay {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+
+  .modal-content {
+    max-width: 100% !important;
+    max-height: 85vh !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
+    animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    padding: 1.25rem !important;
   }
 }
+
+/* Touch Friendly Utilities */
+button, input, select, textarea {
+  min-height: 38px;
+}
+
+/* Mobile Bottom Navigation Bar */
+.mobile-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 62px;
+    background: rgba(9, 13, 22, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-subtle);
+    align-items: center;
+    justify-content: space-around;
+    z-index: 50;
+    padding: 0 0.5rem;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.35);
+  }
+
+  [data-theme='light'] .mobile-bottom-nav {
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    flex: 1;
+    height: 100%;
+    transition: color var(--transition-fast);
+  }
+
+  .mobile-nav-item.active {
+    color: var(--brand-primary);
+  }
+
+  .mobile-nav-add-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--brand-gradient);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-glow-brand);
+    border: none;
+    transform: translateY(-10px);
+    cursor: pointer;
+    transition: transform var(--transition-fast);
+    flex-shrink: 0;
+  }
+
+  .mobile-nav-add-btn:active {
+    transform: translateY(-8px) scale(0.95);
+  }
+}
+
+

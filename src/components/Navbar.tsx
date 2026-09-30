@@ -8,7 +8,6 @@ import {
   LogOut,
   Sun,
   Moon,
-  User as UserIcon,
   RefreshCw,
 } from 'lucide-react';
 
@@ -38,28 +37,39 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="container header-content">
         {/* Brand */}
         <div className="logo-badge" onClick={onRefresh} title="Click to refresh data">
-          <div className="logo-icon">
-            <Wallet size={20} />
+          <div className="logo-icon" style={{ width: '34px', height: '34px', flexShrink: 0 }}>
+            <Wallet size={19} />
           </div>
           <div>
-            <div style={{ lineHeight: 1.1, fontSize: '1.25rem', fontWeight: 800 }}>LendFlow</div>
-            <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+            <div style={{ lineHeight: 1.1, fontSize: '1.2rem', fontWeight: 800 }}>LendFlow</div>
+            <div
+              className="logo-subtitle"
+              style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 500 }}
+            >
               Smart Debt & Lending Ledger
             </div>
           </div>
         </div>
 
-        {/* Right Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        {/* Right Controls */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
           {/* Refresh Button */}
           <button
             onClick={onRefresh}
             className="btn btn-ghost"
-            style={{ padding: '0.5rem', borderRadius: '50%' }}
+            style={{
+              padding: '0.45rem',
+              borderRadius: 'var(--radius-sm)',
+              width: '34px',
+              height: '34px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
             title="Refresh Ledger Data"
           >
             <RefreshCw
-              size={18}
+              size={16}
               style={{
                 animation: isRefreshing ? 'spin 1s linear infinite' : 'none',
               }}
@@ -72,11 +82,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             onChange={(e) => onCurrencyChange(e.target.value)}
             className="form-select"
             style={{
-              padding: '0.4rem 0.6rem',
-              fontSize: '0.825rem',
-              fontWeight: 600,
+              padding: '0.35rem 0.5rem',
+              fontSize: '0.8rem',
+              fontWeight: 700,
               width: 'auto',
+              minWidth: '65px',
+              height: '34px',
               cursor: 'pointer',
+              borderRadius: 'var(--radius-sm)',
             }}
             title="Change Display Currency"
           >
@@ -91,47 +104,59 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={onToggleTheme}
             className="btn btn-secondary"
-            style={{ padding: '0.5rem 0.6rem' }}
+            style={{
+              padding: '0.45rem',
+              width: '34px',
+              height: '34px',
+              borderRadius: 'var(--radius-sm)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
             title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
           >
-            {theme === 'dark' ? <Sun size={17} color="#f59e0b" /> : <Moon size={17} color="#6366f1" />}
+            {theme === 'dark' ? <Sun size={16} color="#f59e0b" /> : <Moon size={16} color="#6366f1" />}
           </button>
 
           {/* User profile / Logout */}
           {user && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
               <div
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.5rem',
-                  padding: '0.35rem 0.75rem',
+                  gap: '0.4rem',
+                  padding: '0.25rem 0.5rem',
                   background: 'var(--bg-input)',
                   border: '1px solid var(--border-subtle)',
                   borderRadius: 'var(--radius-full)',
+                  height: '34px',
                 }}
+                title={user.name}
               >
                 <div
                   style={{
-                    width: '24px',
-                    height: '24px',
+                    width: '22px',
+                    height: '22px',
                     borderRadius: '50%',
                     background: 'var(--brand-gradient)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: 'white',
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
+                    fontSize: '0.7rem',
+                    fontWeight: 800,
+                    flexShrink: 0,
                   }}
                 >
                   {user.name.charAt(0).toUpperCase()}
                 </div>
                 <span
+                  className="user-name-text"
                   style={{
-                    fontSize: '0.85rem',
+                    fontSize: '0.8rem',
                     fontWeight: 600,
-                    maxWidth: '120px',
+                    maxWidth: '100px',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',
@@ -144,10 +169,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 onClick={onLogout}
                 className="btn btn-ghost"
-                style={{ padding: '0.5rem', color: 'var(--give-primary)' }}
+                style={{
+                  padding: '0.45rem',
+                  color: 'var(--give-primary)',
+                  width: '34px',
+                  height: '34px',
+                  borderRadius: 'var(--radius-sm)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
                 title="Logout"
               >
-                <LogOut size={18} />
+                <LogOut size={16} />
               </button>
             </div>
           )}
